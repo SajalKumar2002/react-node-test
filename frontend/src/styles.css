@@ -1,0 +1,49 @@
+.bg-cyan {
+  background: rgb(0, 105, 100);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 105, 100, 1) 0%,
+    rgb(1, 169, 184) 40%,
+    rgb(0, 213, 255) 100%
+  );
+}
+
+.bg-card {
+  background-color: #1e2c4f;
+  width: 25rem;
+}
+
+.bg-card {
+  background-color: #1e2c4f;
+  width: 25rem;
+}
+
+.bg-input-box,
+.bg-input-box:focus {
+  background-color: #4d5874;
+  color: white;
+  box-shadow: none;
+}
+
+.box {
+  background-color: #00f4de;
+  width: 10rem;
+  position: relative;
+  bottom: 1rem;
+}
+
+.btn-signup {
+  background-color: #00f4de;
+}
+
+.profile-img {
+  height: 10rem;
+  width: 15rem;
+}
+
+.bg-option {
+  background-color: #ced4da;
+  border: 2px solid #adb5bd;
+  border-radius: 5px;
+  color: #495057;
+}
