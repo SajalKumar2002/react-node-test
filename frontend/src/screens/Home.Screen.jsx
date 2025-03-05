@@ -14,10 +14,17 @@ const Home = () => {
   const getTableData = async () => {
     try {
       const response = await http.get(`/data/${currentPage}`);
-      setTableData(response.data);
+      if (response.status == 200) {
+        setTableData(response.data);
+      }
     } catch (error) {
-      console.log(error);
-      alert("Server Error");
+      if (error.response.status == 401) {
+        alert(error.response.data.message);
+        window.location.href = "/";
+      } else {
+        console.log(error);
+        alert("Something went wrong");
+      }
     }
   };
 
