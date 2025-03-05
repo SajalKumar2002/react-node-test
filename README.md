@@ -8,6 +8,7 @@ Cammmands to follow
 npm install 
 
 cd backend
+npm run data:import
 npm install
 
 cd frontend
@@ -28,4 +29,4 @@ In other one
 cd frontend
 npm run start
 
------------+ending------------------
+-----------ending------------------
