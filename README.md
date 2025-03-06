@@ -3,7 +3,7 @@ THIS IS A README FILE WTIH INSTRUCTIONS HOW TO RUN THE PROJECT.
 For starters.
 Installing the dependencies
 
-Cammmands to follow
+Cammands to follow
 Open two terminal
 (Note: User should be in the root directory of the project)
 
