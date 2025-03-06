@@ -14,7 +14,7 @@ Cammmands to follow
 
     npm install
 
-cd frontend
+    cd frontend
     npm install
 
 NOW, THE DEPENDENCIES HAVE BEEN INSTALLED, IT'S TIME TO RUN THE PROJECT.
