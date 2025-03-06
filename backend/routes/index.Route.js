@@ -4,7 +4,7 @@ const apiRouter = Router();
 
 const {
     getData,
-    insertData,
+    getDataLimit,
     updateData,
     deleteData,
     login,
@@ -27,6 +27,7 @@ apiRouter //(Combined both the data routes and auth Routes)
     .post("/register", register)
     // Data Routes
     .use(getAccessToRoute)
+    .get("/data/limit", getDataLimit)
     .get("/data/:page", getData)
     .patch("/data/:id", updateData)
     .delete("/data/:id", deleteData)

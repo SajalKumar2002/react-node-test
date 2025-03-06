@@ -9,12 +9,12 @@ const {
 
 const getData = async (req, res) => {
     try {
-        const page = req.params.page;
+        const skips = (req.params.page - 1) * 10;
         const data = await SampleDataModel
             .find()
-            .skip(page * 10)
+            .skip(skips)
             .limit(10);
-        res.status(200).send(data)
+        res.status(200).json(data)
     } catch (error) {
         console.log(error);
         res.status(500).send("Server Error", error?.message);
@@ -23,8 +23,9 @@ const getData = async (req, res) => {
 
 const updateData = async (req, res) => {
     try {
-        const data = await SampleDataModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.status(200).send(data)
+        const id = req.params.id;
+        const data = await SampleDataModel.findByIdAndUpdate(id, req.body, { new: true });
+        res.status(200);
     } catch (error) {
         console.log(error);
         res.status(500).send("Server Error", error?.message);
@@ -91,8 +92,19 @@ const register = async (req, res) => {
     }
 }
 
+const getDataLimit = async (req, res) => {
+    try {
+        const data = await SampleDataModel.estimatedDocumentCount();
+        res.status(200).json(data)
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Server Error", error?.message);
+    }
+}
+
 module.exports = {
     getData,
+    getDataLimit,
     updateData,
     deleteData,
     login,
