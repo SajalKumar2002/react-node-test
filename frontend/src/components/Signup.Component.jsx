@@ -23,9 +23,10 @@ const Login = () => {
 
       const response = await http.post("/register", formData);
 
-      if (response.status == 201) {
+      if (response.status == 200) {
+        localStorage.setItem("token", response.data.token);
         alert(response.data.message);
-        window.location.href = "/";
+        window.location.href = "/home";
       }
     } catch (error) {
       alert(error.response.data.message);

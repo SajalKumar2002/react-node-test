@@ -75,14 +75,23 @@ const register = async (req, res) => {
         const existingUser = await UserModel.findOne({ email: req.body.email })
         if (!existingUser) {
             const hash = await bcrypt.hash(req.body.password, 10)
-            await UserModel.create(
+            const user = await UserModel.create(
                 {
                     email: req.body.email,
                     password: hash,
                     name: req.body.name
                 }
             );
-            res.status(201).send({ message: "Successfully Registered" });
+
+            sendTokenToClient(
+                {
+                    id: user._id,
+                    email: user.email
+                },
+                false,
+                res
+            )
+
         } else {
             res.status(409).send({ message: "User Already exists" })
         }

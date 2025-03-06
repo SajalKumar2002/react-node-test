@@ -15,7 +15,7 @@ exports.sendTokenToClient = (client, rememberMe, res) => {
 
     res.cookie("usertoken", token, cookie);
 
-    res.status(200).json({ message: "Successfully Logged In" });
+    res.status(200).send({ message: "Successfully Logged In" });
 };
 
 exports.checkCookiePresence = (req) => {
