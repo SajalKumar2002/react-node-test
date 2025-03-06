@@ -44,4 +44,15 @@ In other terminal.
     cd frontend
     npm run start
 
------------ending------------------
+NOW YOU MUST HAVE SUCCESSFULLY STARTED THE PROJECT, IT'S TIME TO SEE WHAT IS IN THE PROJECT.
+
+The screen that will be displayed is the login screen at localhost:3000. 
+
+Use this:
+Email: admin@gmail.com
+password: admin
+
+If you have the id and password, then you are good to go. For other's you can sign up by clicking registering as a new user. 
+Once user is registered, You have to go back to the login screen and login with those credentials you used earlier at the registration page.
+
+Forgetting the password has not functionality right now.
