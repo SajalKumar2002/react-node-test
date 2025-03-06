@@ -34,7 +34,7 @@ const updateData = async (req, res) => {
 
 const deleteData = async (req, res) => {
     try {
-        await SampleDataModel.findByIdandDelete(req.params.id);
+        await SampleDataModel.findByIdAndDelete(req.params.id);
         res.status(200);
     } catch (error) {
         console.log(error);

@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
+
 import http from "../axios";
+
 import TableRecord from "../components/TableRecord.Component";
 
 const Home = () => {
@@ -8,42 +10,37 @@ const Home = () => {
   const [pageNumberIndicator, setPageNumberIndicator] = useState([1, 2, 3, 4]);
   const [tableLimit, setTableLimit] = useState(0);
 
-  const getTableData = useCallback(
-    async (page) => {
-      try {
-        const response = await http.get(`/data/${page}`);
-        if (response.status === 200) {
-          setTableData(response.data);
-        }
-      } catch (error) {
-        console.log(error);
-        alert("Something went wrong");
+  const fetchTableData = useCallback(async (page) => {
+    try {
+      const response = await http.get(`/data/${page}`);
+      if (response.status === 200) {
+        setTableData(response.data);
       }
-    },
-    [currentPage]
-  );
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  }, []);
+
+  const fetchTableLimit = useCallback(async () => {
+    try {
+      const response = await http.get("/data/limit");
+      if (response.status === 200) {
+        setTableLimit(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  }, []);
 
   const HandleLogout = async () => {
     localStorage.removeItem("token");
     window.location.href = "/";
   };
 
-  const deleteData = async (id) => {
-    try {
-      const response = await http.delete(`/data/${id}`);
-      if (response.status === 200) {
-        alert("Record deleted successfully");
-        getTableData(currentPage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert("Deletion failed");
-    }
-  };
-
-
   const handlePageChange = useCallback(() => {
-    if (currentPage >= 3 && currentPage + 1 <= tableLimit / 10) {
+    if (currentPage >= 3 && currentPage < tableLimit / 10) {
       setPageNumberIndicator([
         currentPage - 2,
         currentPage - 1,
@@ -53,22 +50,26 @@ const Home = () => {
     }
   }, [currentPage, tableLimit]);
 
-  useEffect(() => {
-    getTableData(currentPage);
-    handlePageChange();
-  }, [currentPage, getTableData, handlePageChange]);
-
-  useEffect(() => {
-    const fetchLimit = async () => {
-      try {
-        const response = await http.get("/data/limit");
-        setTableLimit(response.data);
-      } catch (error) {
-        console.error("Error fetching table limit:", error);
+  const deleteData = async (id) => {
+    try {
+      const response = await http.delete(`/data/${id}`);
+      if (response.status === 200) {
+        alert("Record deleted successfully");
+        fetchTableData(currentPage);
       }
-    };
+    } catch (error) {
+      console.log(error);
+      alert("Deletion failed");
+    }
+  };
 
-    fetchLimit();
+  useEffect(() => {
+    fetchTableData(currentPage);
+    handlePageChange();
+  }, [currentPage, fetchTableData]);
+
+  useEffect(() => {
+    fetchTableLimit();
   }, []);
 
   return (
@@ -86,15 +87,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      {/* Options */}
-      {/* <div className="container mb-3">
-        <div className="row bg-option">
-          <div className="col p-2">
-            <span className="m-0">Options</span>
-          </div>
-        </div>
-      </div> */}
 
       {/* Table */}
       <div className="container">
@@ -116,7 +108,7 @@ const Home = () => {
                   <TableRecord
                     data={data}
                     index={index}
-                    key={index}
+                    key={data._id}
                     deleteData={deleteData}
                   />
                 ))}

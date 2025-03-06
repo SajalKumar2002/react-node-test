@@ -79,7 +79,7 @@ const TableRecord = ({ data, index, deleteData }) => {
           <span className="form-control border-0">{updatedData.role}</span>
         )}
       </td>
-      <td className="">
+      <td className="align-content-center">
         {showUpdate ? (
           <select
             className="form-control"
