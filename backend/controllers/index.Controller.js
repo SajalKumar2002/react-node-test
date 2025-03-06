@@ -25,7 +25,7 @@ const updateData = async (req, res) => {
     try {
         const id = req.params.id;
         const data = await SampleDataModel.findByIdAndUpdate(id, req.body, { new: true });
-        res.status(200);
+        res.status(200).send(data);
     } catch (error) {
         console.log(error);
         res.status(500).send("Server Error", error?.message);

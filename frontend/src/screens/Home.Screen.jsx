@@ -1,20 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import http from "../axios";
-
-import Close from "../svg/CloseCircle-Bold-32px.svg";
-import Setting from "../svg/Setting2-Bold-32px.svg";
+import TableRecord from "../components/TableRecord.Component";
 
 const Home = () => {
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageNumberIndicator, setPageNumberIndicator] = useState([1, 2, 3, 4]);
   const [tableLimit, setTableLimit] = useState(0);
-
-  const formatDate = (date) => {
-    const newDate = new Date(date);
-    const formattedDate = `${newDate.getDate()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
-    return formattedDate;
-  };
 
   const getTableData = useCallback(
     async (page) => {
@@ -49,21 +41,6 @@ const Home = () => {
     }
   };
 
-  const updateData = async (id) => {
-    try {
-      const response = await http.patch(`/data/${id}`, {
-        role: "Admin",
-        status: "Active",
-      });
-      if (response.status === 200) {
-        alert("Record updated successfully");
-        getTableData(currentPage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert("Operation failed");
-    }
-  };
 
   const handlePageChange = useCallback(() => {
     if (currentPage >= 3 && currentPage + 1 <= tableLimit / 10) {
@@ -122,7 +99,7 @@ const Home = () => {
       {/* Table */}
       <div className="container">
         <div className="row text-center">
-          <div className="col-lg-8 col-md-10 col-sm-12">
+          <div className="col-10">
             <table className="table">
               <thead>
                 <tr>
@@ -136,38 +113,12 @@ const Home = () => {
               </thead>
               <tbody>
                 {tableData.map((data, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{data.name}</td>
-                    <td>{formatDate(data.createdAt)}</td>
-                    <td className="">
-                      <span className="">{data.role}</span>
-                    </td>
-                    <td className="">
-                      <span className="">{data.status}</span>
-                    </td>
-                    <td>
-                      <div className="d-flex justify-content-around">
-                        <button
-                          className="btn p-0"
-                          onClick={() => updateData(data._id)}
-                        >
-                          <img src={Setting} height={30} alt="" />
-                        </button>
-                        <button
-                          className="btn p-0"
-                          onClick={() => deleteData(data._id)}
-                        >
-                          <img
-                            src={Close}
-                            height={30}
-                            alt=""
-                            className="pe-auto"
-                          />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                  <TableRecord
+                    data={data}
+                    index={index}
+                    key={index}
+                    deleteData={deleteData}
+                  />
                 ))}
               </tbody>
             </table>
@@ -218,4 +169,3 @@ const Home = () => {
 };
 
 export default Home;
-
