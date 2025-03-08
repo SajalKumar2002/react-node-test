@@ -35,7 +35,7 @@ const updateData = async (req, res) => {
 const deleteData = async (req, res) => {
     try {
         await SampleDataModel.findByIdAndDelete(req.params.id);
-        res.status(200);
+        res.sendStatus(200);
     } catch (error) {
         console.log(error);
         res.status(500).send("Server Error", error?.message);
